@@ -1,0 +1,21 @@
+{
+  "site_title": "RocMaidan",
+  "site_subtitle": "Latest from our Facebook and Instagram",
+  "page_id": "rocmaidan",
+  "ig_username": "rocmaidan",
+  "api_version": "v21.0",
+  "posts_per_source": 30,
+  "max_tiles": 28,
+  "expand_albums": true,
+  "show_header": true,
+  "follow_links": {
+    "facebook": "https://www.facebook.com/rocmaidan",
+    "instagram": "https://www.instagram.com/rocmaidan/"
+  },
+  "brand": {
+    "accent": "#0057b7",
+    "accent2": "#ffd700",
+    "tile_radius": "10px",
+    "gutter": "8px"
+  }
+}
