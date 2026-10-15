@@ -255,8 +255,9 @@ def main() -> int:
         else:
             feed["sources"]["instagram"] = {"ok": False, "error": "no Instagram business account linked to this Page"}
     except Exception as exc:
-        log(f"page lookup failed: {graph_error(exc)}")
-        feed["sources"]["facebook"] = {"ok": False, "error": graph_error(exc)}
+        detail = graph_error(exc)  # parse once: reading the HTTPError body twice returns nothing
+        log(f"page lookup failed: {detail}")
+        feed["sources"]["facebook"] = {"ok": False, "error": detail}
 
     # If a single source failed, keep the last good items for it so the wall never goes
     # blank. If EVERY source failed that is not a hiccup, it is a broken token or config,
