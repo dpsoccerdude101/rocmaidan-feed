@@ -258,8 +258,15 @@ def main() -> int:
         log(f"page lookup failed: {graph_error(exc)}")
         feed["sources"]["facebook"] = {"ok": False, "error": graph_error(exc)}
 
-    # If a source returned nothing, keep the last good items for it so the wall never goes blank.
+    # If a single source failed, keep the last good items for it so the wall never goes
+    # blank. If EVERY source failed that is not a hiccup, it is a broken token or config,
+    # so fail loudly and let the caller alert.
     failed = {name for name, s in feed["sources"].items() if not s.get("ok")}
+    ok_sources = {name for name, s in feed["sources"].items() if s.get("ok")}
+    if failed and not ok_sources:
+        errors = "; ".join(f"{n}: {feed['sources'][n].get('error')}" for n in sorted(failed))
+        log(f"every source failed, refusing to publish stale data. {errors}")
+        return 1
     if failed:
         kept = [i for i in prev_items if i.get("platform") in failed]
         if kept:
